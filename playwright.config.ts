@@ -1,5 +1,25 @@
 import { defineConfig, devices } from '@playwright/test';
-import { ENV } from './config/env';
+import { getEnvConfig, resolveTargetEnvs, type Environment } from './config/env';
+
+const browsers = [
+  { name: 'chromium', device: devices['Desktop Chrome']  },
+  { name: 'firefox',  device: devices['Desktop Firefox'] },
+  { name: 'webkit',   device: devices['Desktop Safari']  },
+] as const;
+
+const targetEnvs = resolveTargetEnvs();
+
+const browserProjects = browsers.flatMap(b =>
+  targetEnvs.map((env: Environment) => ({
+    name: `${b.name}-${env}`,
+    use: {
+      ...b.device,
+      baseURL: getEnvConfig(env).baseURL,
+      environment: env,
+    },
+    dependencies: ['setup'],
+  }))
+);
 
 export default defineConfig({
   // 📁 Test location
@@ -40,9 +60,6 @@ export default defineConfig({
 
   // 🌐 Global settings for all tests
   use: {
-    // Base URL for UI navigation
-    baseURL: ENV.BASE_URL,
-
     // Use data-test as the attribute for page.getByTestId()
     testIdAttribute: 'data-test',
 
@@ -64,32 +81,11 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
-  projects: [
-  {
-    name: 'setup',
-    testMatch: /global\.setup\.ts/,
-    teardown: 'cleanup',
-  },
-  {
-    name: 'cleanup',
-    testMatch: /global\.teardown\.ts/,
-  },
-  {
-    name: 'chromium',
-    use: { ...devices['Desktop Chrome'] },
-    dependencies: ['setup'],
-  },
-  {
-    name: 'firefox',
-    use: { ...devices['Desktop Firefox'] },
-    dependencies: ['setup'],
-  },
-  {
-    name: 'webkit',
-    use: { ...devices['Desktop Safari'] },
-    dependencies: ['setup'],
-  },
-],
+    projects: [
+    { name: 'setup',   testMatch: /global\.setup\.ts/,    teardown: 'cleanup' },
+    { name: 'cleanup', testMatch: /global\.teardown\.ts/ },
+    ...browserProjects,    // ← critical: must spread the generated array
+   ],
 
   // 🚀 Optional local server setup (uncomment if needed)
   /*

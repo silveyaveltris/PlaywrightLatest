@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { users } from '../utils/testData';
 
-test('Verify successful login with valid credentials', async ({ page }) => {
+test('Verify successful login with valid credentials @regression @smoke', async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();

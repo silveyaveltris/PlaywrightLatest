@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { getEnvConfig, resolveTargetEnvs, type Environment } from './config/env';
+import { env } from 'node:process';
 
 const browsers = [
   { name: 'chromium', device: devices['Desktop Chrome']  },
@@ -60,15 +61,13 @@ export default defineConfig({
 
   // 🌐 Global settings for all tests
   use: {
+    baseURL: env.BASE_URL,
     // Use data-test as the attribute for page.getByTestId()
     testIdAttribute: 'data-test',
 
     // Headless in CI, headed locally for visibility
-    headless: !!process.env.CI,
-    launchOptions: {
-      slowMo: process.env.CI ? 0 : 300,
-    },
-
+    headless: !!process.env.CI,  //headless in CI, headed locally
+   
     // Per-action and navigation timeouts
     actionTimeout: 10000,
     navigationTimeout: 30000,

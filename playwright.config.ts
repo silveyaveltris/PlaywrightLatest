@@ -3,9 +3,9 @@ import { getEnvConfig, resolveTargetEnvs, type Environment } from './config/env'
 import { env } from 'node:process';
 
 const browsers = [
-  { name: 'chromium', device: devices['Desktop Chrome']  },
-  { name: 'firefox',  device: devices['Desktop Firefox'] },
-  { name: 'webkit',   device: devices['Desktop Safari']  },
+ { name: 'chromium', device: devices['Desktop Chrome']  },
+ { name: 'firefox',  device: devices['Desktop Firefox'] },
+ { name: 'webkit',   device: devices['Desktop Safari']  },
 ] as const;
 
 const targetEnvs = resolveTargetEnvs();
@@ -23,43 +23,40 @@ const browserProjects = browsers.flatMap(b =>
 );
 
 export default defineConfig({
-  // 📁 Test location
+  //Test location
   testDir: './tests',
 
-  // 🗂️ Artifacts output (screenshots, videos, traces)
+  //Artifacts output (screenshots, videos, traces)
   outputDir: './test-results',
 
-  // ⏱️ Per-test timeout (ms) — overrides 30s default
- // timeout: 30000,
-
-  // ✅ Global expect() assertion timeout
+  //Global expect() assertion timeout
   expect: {
     timeout: 10000,
   },
 
-  // 🔍 Only run files matching this pattern
+  //Only run files matching this pattern
   testMatch: '**/*.spec.ts',
 
-  // ⚡ Run tests in parallel
+  //Run tests in parallel
   fullyParallel: true,
 
-  // 🚨 Prevent accidental test.only in CI
+  //Prevent accidental test.only in CI
   forbidOnly: !!process.env.CI,
 
-  // 🔁 Retry failed tests in CI for stability
+  //Retry failed tests in CI for stability
   retries: process.env.CI ? 2 : 1,
 
-  // 👥 Control workers (parallel execution)
+  //Control workers (parallel execution)
   workers: process.env.CI ? 1 : undefined,
 
-  // 📊 Reporting — HTML opens on failure locally, never in CI
+  //Reporting — HTML opens on failure locally, never in CI
   reporter: [
     ['html', { open: process.env.CI ? 'never' : 'on-failure' }],
     ['list'],
     ['allure-playwright'],
   ],
 
-  // 🌐 Global settings for all tests
+  //Global settings for all tests
   use: {
     baseURL: env.BASE_URL,
     // Use data-test as the attribute for page.getByTestId()
@@ -85,13 +82,4 @@ export default defineConfig({
     { name: 'cleanup', testMatch: /global\.teardown\.ts/ },
     ...browserProjects,    // ← critical: must spread the generated array
    ],
-
-  // 🚀 Optional local server setup (uncomment if needed)
-  /*
-  webServer: {
-    command: 'npm run start',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
-  */
 });

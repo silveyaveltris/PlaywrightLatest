@@ -3,7 +3,7 @@ import { Page, expect } from '@playwright/test';
 export class LoginPage {
   constructor(private page: Page) {}
 
-  // ✅ Use locators
+  //Use locators
   username = this.page.locator('#user-name');
   password = this.page.locator('#password');
   loginBtn = this.page.locator('#login-button');

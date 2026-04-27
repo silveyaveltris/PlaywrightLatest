@@ -1,4 +1,3 @@
-// fixtures/baseTest.ts
 import { test as base } from '@playwright/test';
 import type { Environment } from '../config/env';
 import { LoginPage } from '../pages/LoginPage';
@@ -18,9 +17,7 @@ export const test = base.extend<TestOptions & Fixtures>({
   environment: ['qa', { option: true }],
 
   inventoryPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.goto();
-    await loginPage.login(users.validUser.username, users.validUser.password);
+    await page.goto('/inventory.html');
     await use(new InventoryPage(page));
   },
 });

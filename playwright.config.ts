@@ -10,6 +10,15 @@ const browsers = [
 
 const targetEnvs = resolveTargetEnvs();
 
+const setupProjects = targetEnvs.map(env => ({
+  name: `setup-${env}`,
+  testMatch: /auth\.setup\.ts/,
+  use: {
+    baseURL: getEnvConfig(env).baseURL,
+    environment: env,
+  },
+}));
+
 const browserProjects = browsers.flatMap(b =>
   targetEnvs.map((env: Environment) => ({
     name: `${b.name}-${env}`,
@@ -17,14 +26,15 @@ const browserProjects = browsers.flatMap(b =>
       ...b.device,
       baseURL: getEnvConfig(env).baseURL,
       environment: env,
+      storageState: `playwright/.auth/user-${env}.json`,
     },
-    dependencies: ['setup'],
+    dependencies: [`setup-${env}`],
   }))
 );
 
 export default defineConfig({
   //Test location
-  testDir: './tests',
+  testDir: './tests/',
 
   //Artifacts output (screenshots, videos, traces)
   outputDir: './test-results',
@@ -77,9 +87,8 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
-    projects: [
-    { name: 'setup',   testMatch: /global\.setup\.ts/,    teardown: 'cleanup' },
-    { name: 'cleanup', testMatch: /global\.teardown\.ts/ },
-    ...browserProjects,    // ← critical: must spread the generated array
-   ],
+  projects: [
+  ...setupProjects,        // generates setup-qa, setup-staging, etc
+  ...browserProjects, //critical: must spread the generated array
+],
 });

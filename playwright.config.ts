@@ -64,25 +64,32 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
 
-  // 🌍 Cross-browser testing setup
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-  ],
-
-  // 🔧 Global setup and teardown hooks
-  globalSetup: './global-setup.ts',
-  globalTeardown: './global-teardown.ts',
+  {
+    name: 'setup',
+    testMatch: /global\.setup\.ts/,
+    teardown: 'cleanup',
+  },
+  {
+    name: 'cleanup',
+    testMatch: /global\.teardown\.ts/,
+  },
+  {
+    name: 'chromium',
+    use: { ...devices['Desktop Chrome'] },
+    dependencies: ['setup'],
+  },
+  {
+    name: 'firefox',
+    use: { ...devices['Desktop Firefox'] },
+    dependencies: ['setup'],
+  },
+  {
+    name: 'webkit',
+    use: { ...devices['Desktop Safari'] },
+    dependencies: ['setup'],
+  },
+],
 
   // 🚀 Optional local server setup (uncomment if needed)
   /*

@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","4289","Verify successful login with valid credentials","chromium","2026-04-23","passed","2026-04-23","","login.spec.ts","",""
-"","9901","Verify menus after login","firefox","2026-04-23","passed","2026-04-23","","inventory.spec.ts","",""
-"","5055","Verify menus after login","chromium","2026-04-23","passed","2026-04-23","","inventory.spec.ts","",""
-"","7977","Verify menus after login","webkit","2026-04-23","passed","2026-04-23","","inventory.spec.ts","",""
-"","6463","Verify successful login with valid credentials","firefox","2026-04-23","passed","2026-04-23","","login.spec.ts","",""
-"","6221","Verify successful login with valid credentials","webkit","2026-04-23","passed","2026-04-23","","login.spec.ts","",""

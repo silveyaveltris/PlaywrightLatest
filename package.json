@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test"
-  },
+  "test": "playwright test",
+  "clean": "node -e \"['test-results','playwright-report','blob-report','allure-results','allure-report','results-new'].forEach(d => require('fs').rmSync(d, {recursive:true, force:true}))\""
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

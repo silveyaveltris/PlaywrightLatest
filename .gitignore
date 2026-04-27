@@ -1,8 +1,28 @@
-
-# Playwright
+# Dependencies
 node_modules/
+
+# Playwright artifacts
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Allure artifacts
+/allure-results/
+/allure-report/
+
+# Legacy artifact dirs (delete from disk once safe)
+/results-new/
+
+# Environment files (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# IDE / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

@@ -2,7 +2,6 @@ import { test as base } from '@playwright/test';
 import type { Environment } from '../config/env';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
-//import { users } from '../utils/testData';
 
 type TestOptions = {
   environment: Environment;

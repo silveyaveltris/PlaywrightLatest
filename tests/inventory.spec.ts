@@ -1,4 +1,4 @@
-import { test } from '../fixtures/baseTest';
+import { test } from '@fixtures/baseTest';
 
 test('Sidebar "All Items" link shows the backpack @smoke @regression', async ({ inventoryPage }) => {
   await inventoryPage.openMenu();

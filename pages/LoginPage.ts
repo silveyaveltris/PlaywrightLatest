@@ -1,12 +1,17 @@
-import { Page, expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class LoginPage {
-  private readonly username = this.page.getByTestId('username');
-  private readonly password = this.page.getByTestId('password');
-  private readonly loginBtn = this.page.getByTestId('login-button');
-  private readonly errorMessage = this.page.getByTestId('error');
+  private readonly username: Locator;
+  private readonly password: Locator;
+  private readonly loginBtn: Locator;
+  private readonly errorMessage: Locator;
 
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) {
+    this.username     = page.getByTestId('username');
+    this.password     = page.getByTestId('password');
+    this.loginBtn     = page.getByTestId('login-button');
+    this.errorMessage = page.getByTestId('error');
+  }
 
   async goto() {
     await this.page.goto('/');

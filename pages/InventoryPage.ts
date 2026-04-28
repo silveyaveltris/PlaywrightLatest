@@ -1,10 +1,13 @@
-import { Page, expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class InventoryPage {
-  private readonly menuBtn = this.page.getByRole('button', { name: 'Open Menu' });
-  private readonly allItemsLink = this.page.getByTestId('inventory-sidebar-link');
+  private readonly menuBtn: Locator;
+  private readonly allItemsLink: Locator;
 
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) {
+    this.menuBtn      = page.getByRole('button', { name: 'Open Menu' });
+    this.allItemsLink = page.getByTestId('inventory-sidebar-link');
+  }
 
   private itemByName(itemName: string) {
     return this.page.getByTestId('inventory-item-name').filter({ hasText: itemName });

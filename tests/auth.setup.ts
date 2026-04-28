@@ -1,5 +1,5 @@
-import { test as setup, expect } from '../fixtures/baseTest';
-import { users } from '../utils/testData';
+import { test as setup, expect } from '@fixtures/baseTest';
+import { users } from '@utils/testData';
 
 setup('authenticate as standard user', async ({ page, loginPage, environment }) => {
   await loginPage.goto();

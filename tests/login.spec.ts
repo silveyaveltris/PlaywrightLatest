@@ -1,5 +1,5 @@
-import { test, expect } from '../fixtures/baseTest';
-import { users, invalidCredentials, lockedOutErrorMessage } from '../utils/testData';
+import { test, expect } from '@fixtures/baseTest';
+import { users, invalidCredentials, lockedOutErrorMessage } from '@utils/testData';
 
 test.describe('Login flow', () => {
   test.use({ storageState: { cookies: [], origins: [] } });

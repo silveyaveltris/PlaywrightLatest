@@ -75,7 +75,7 @@ playwright.config.ts
 
 - **Naming** — test names should describe the behavior verified, not the steps taken. `'Sidebar "All Items" link shows the backpack'` over `'Verify menus after login'`.
 - **Tags** — append `@smoke`, `@regression`, etc. to the test title for grep-based filtering.
-- **Imports** — `import { test, expect } from '../fixtures/baseTest'` (never from `@playwright/test` directly in specs).
+- **Imports** — `import { test, expect } from '@fixtures/baseTest'` (never from `@playwright/test` directly in specs).
 - **Fixtures over inline setup** — if multiple tests need the same precondition, lift it into a fixture.
 
 ## Reporting

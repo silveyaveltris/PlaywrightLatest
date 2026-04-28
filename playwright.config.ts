@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { getEnvConfig, resolveTargetEnvs, type Environment } from './config/env';
+import { getEnvConfig, resolveTargetEnvs, type Environment } from '@config/env';
 
 const browsers = [
  { name: 'chromium', device: devices['Desktop Chrome']  },

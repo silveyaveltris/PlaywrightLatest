@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 import { getEnvConfig, resolveTargetEnvs, type Environment } from './config/env';
-import { env } from 'node:process';
 
 const browsers = [
  { name: 'chromium', device: devices['Desktop Chrome']  },
@@ -14,7 +13,7 @@ const setupProjects = targetEnvs.map(env => ({
   name: `setup-${env}`,
   testMatch: /auth\.setup\.ts/,
   use: {
-    baseURL: getEnvConfig(env).baseURL,
+    baseURL: getEnvConfig(env).urls.base,
     environment: env,
   },
 }));
@@ -24,7 +23,7 @@ const browserProjects = browsers.flatMap(b =>
     name: `${b.name}-${env}`,
     use: {
       ...b.device,
-      baseURL: getEnvConfig(env).baseURL,
+      baseURL: getEnvConfig(env).urls.base,
       environment: env,
       storageState: `playwright/.auth/user-${env}.json`,
     },
@@ -68,7 +67,6 @@ export default defineConfig({
 
   //Global settings for all tests
   use: {
-    baseURL: env.BASE_URL,
     // Use data-test as the attribute for page.getByTestId()
     testIdAttribute: 'data-test',
 

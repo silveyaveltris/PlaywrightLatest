@@ -1,12 +1,12 @@
 import { Page, expect } from '@playwright/test';
 
 export class InventoryPage {
-  constructor(private page: Page) {}
+  private readonly menuBtn = this.page.getByRole('button', { name: 'Open Menu' });
+  private readonly allItemsLink = this.page.getByTestId('inventory-sidebar-link');
 
-  menuBtn = this.page.locator('#react-burger-menu-btn');
-  allItemsLink = this.page.getByTestId('inventory-sidebar-link');
+  constructor(private readonly page: Page) {}
 
-  getItemByName(itemName: string) {
+  private itemByName(itemName: string) {
     return this.page.getByTestId('inventory-item-name').filter({ hasText: itemName });
   }
 
@@ -18,11 +18,7 @@ export class InventoryPage {
     await this.allItemsLink.click();
   }
 
-  async verifyInventoryPage() {
-    await expect(this.page).toHaveURL(/inventory/);
-  }
-
-  async verifyItemVisible(itemName: string) {
-    await expect(this.getItemByName(itemName)).toBeVisible();
+  async expectItemVisible(itemName: string) {
+    await expect(this.itemByName(itemName)).toBeVisible();
   }
 }

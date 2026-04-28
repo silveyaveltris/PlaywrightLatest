@@ -1,4 +1,5 @@
 import { test as setup, expect } from '@fixtures/baseTest';
+import { authStateFilePath } from '@config/env';        // ← add this line
 import { users } from '@utils/testData';
 
 setup('authenticate as standard user', async ({ page, loginPage, environment }) => {
@@ -9,5 +10,5 @@ setup('authenticate as standard user', async ({ page, loginPage, environment }) 
   // before post-login cookies are set produces an unauthenticated file.
   await expect(page).toHaveURL(/inventory/);
 
-  await page.context().storageState({ path: `playwright/.auth/user-${environment}.json` });
+await page.context().storageState({ path: authStateFilePath(environment) });
 });

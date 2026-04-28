@@ -15,7 +15,8 @@ const configs: Record<Environment, EnvConfig> = {
 };
 
 export const getEnvConfig = (env: Environment): EnvConfig => configs[env];
-
+export const authStateFilePath = (env: Environment): string =>
+  `playwright/.auth/user-${env}.json`;
 export const ALL_ENVIRONMENTS = Object.keys(configs) as readonly Environment[];
 
 export function resolveTargetEnvs(): Environment[] {

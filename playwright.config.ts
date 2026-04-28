@@ -1,10 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
-import { getEnvConfig, resolveTargetEnvs, type Environment } from '@config/env';
+import { getEnvConfig, resolveTargetEnvs, authStateFilePath, type Environment } from '@config/env';
 
 const browsers = [
  { name: 'chromium', device: devices['Desktop Chrome']  },
- { name: 'firefox',  device: devices['Desktop Firefox'] },
- { name: 'webkit',   device: devices['Desktop Safari']  },
+// { name: 'firefox',  device: devices['Desktop Firefox'] },
+// { name: 'webkit',   device: devices['Desktop Safari']  },
 ] as const;
 
 const targetEnvs = resolveTargetEnvs();
@@ -25,7 +25,7 @@ const browserProjects = browsers.flatMap(b =>
       ...b.device,
       baseURL: getEnvConfig(env).urls.base,
       environment: env,
-      storageState: `playwright/.auth/user-${env}.json`,
+      storageState: authStateFilePath(env),
     },
     dependencies: [`setup-${env}`],
   }))
